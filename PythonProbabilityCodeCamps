@@ -1,0 +1,41 @@
+import random
+
+
+class Hat:
+    """A class of Python object that describes the properties of a hat"""
+
+    def __init__(self, **kwargs):
+        """Initializes the hat with the given colors and quantities"""
+        self.contents = []
+        for color, quantity in kwargs.items():
+            for _ in range(quantity):
+                self.contents.append(color)
+
+    def draw(self, num_balls):
+        """Draws num_balls from the hat and returns them as a list"""
+        if num_balls > len(self.contents):
+            return self.contents
+        else:
+            return random.sample(self.contents, num_balls)
+
+
+def experiment(hat, expected_balls, num_balls_drawn, num_experiments):
+    """Performs num_experiments experiments and returns the probability of drawing the expected_balls"""
+    successes = 0
+    for _ in range(num_experiments):
+        drawn_balls = hat.draw(num_balls_drawn)
+        if drawn_balls == expected_balls:
+            successes += 1
+    return successes / num_experiments
+
+
+if __name__ == "__main__":
+    # Create a hat with 5 blue balls, 4 red balls, and 2 green balls.
+    hat = Hat(blue=5, red=4, green=2)
+
+    # Determine the probability of drawing at least 1 red ball and 2 green balls from the hat.
+    expected_balls = {"red": 1, "green": 2}
+    num_balls_drawn = 4
+    num_experiments = 10000
+    probability = experiment(hat, expected_balls, num_balls_drawn, num_experiments)
+    print("The probability of drawing at least 1 red ball and 2 green balls is", probability)
