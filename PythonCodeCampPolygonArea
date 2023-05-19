@@ -1,0 +1,67 @@
+class Rectangle:
+    """A class of Python object that describes the properties of a rectangle"""
+
+    def __init__(self, width, height):
+        """Initializes the rectangle with the given width and height"""
+        self.width = width
+        self.height = height
+
+    def set_width(self, width):
+        """Sets the width of the rectangle"""
+        self.width = width
+
+    def set_height(self, height):
+        """Sets the height of the rectangle"""
+        self.height = height
+
+    def get_area(self):
+        """Returns the area of the rectangle"""
+        return self.width * self.height
+
+    def get_perimeter(self):
+        """Returns the perimeter of the rectangle"""
+        return 2 * (self.width + self.height)
+
+    def get_diagonal(self):
+        """Returns the diagonal of the rectangle"""
+        return (self.width ** 2 + self.height ** 2) ** 0.5
+
+    def get_picture(self):
+        """Returns a string that represents the shape using lines of "*""""
+        if self.width > 50 or self.height > 50:
+            return "Too big for picture."
+        else:
+            picture = []
+            for i in range(self.height):
+                picture.append("*" * self.width)
+            return "\n".join(picture)
+
+    def get_amount_inside(self, other_shape):
+        """Returns the number of times the passed in shape could fit inside the shape"""
+        if isinstance(other_shape, Square):
+            return self.width // other_shape.side * self.height // other_shape.side
+        elif isinstance(other_shape, Rectangle):
+            return self.width // other_shape.width * self.height // other_shape.height
+        else:
+            raise ValueError("other_shape must be a Square or Rectangle")
+
+    def __repr__(self):
+        """Returns a string representation of the rectangle"""
+        return "Rectangle(width={}, height={})".format(self.width, self.height)
+
+
+class Square(Rectangle):
+    """A class of Python object that describes the properties of a square"""
+
+    def __init__(self, side):
+        """Initializes the square with the given side length"""
+        super().__init__(side, side)
+
+    def set_side(self, side):
+        """Sets the side length of the square"""
+        self.width = side
+        self.height = side
+
+    def __repr__(self):
+        """Returns a string representation of the square"""
+        return "Square(side={})".format(self.side)
